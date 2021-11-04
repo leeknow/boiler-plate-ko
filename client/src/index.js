@@ -12,7 +12,7 @@ import Reducer from "./_reducers/";
 
 const createStoreWithMiddleware = applyMiddleware(
   promiseMiddleware,
-  ReduxThunk
+  ReduxThunk,
 )(createStore);
 
 ReactDOM.render(
@@ -20,12 +20,12 @@ ReactDOM.render(
     store={createStoreWithMiddleware(
       Reducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+        window.__REDUX_DEVTOOLS_EXTENSION__(),
     )}
   >
     <App />
   </Provider>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change
