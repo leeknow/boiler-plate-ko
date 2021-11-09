@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import LandingPage from "./components/views/LandingPage/LandingPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
+import RegisterType from "./components/views/RegisterPage/RegisterType";
+import MainLayout from "./components/views/MainLayout/MainLayout";
 import Auth from "./hoc/auth";
 
 function App() {
@@ -19,9 +21,15 @@ function App() {
           of them to render at a time
         */}
         <Switch>
-          <Route exact path="/" component={Auth(LandingPage, null)} />
+          {/* <Route exact path="/" component={Auth(LandingPage, null)} /> */}
+          <Route exact path="/" component={Auth(MainLayout, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
+          <Route
+            exact
+            path="/register/type"
+            component={Auth(RegisterType, false)}
+          />
         </Switch>
       </div>
     </Router>
