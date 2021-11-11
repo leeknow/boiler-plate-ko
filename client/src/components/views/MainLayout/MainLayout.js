@@ -14,46 +14,84 @@ import {
 } from "@ant-design/icons";
 import { InfoCircleOutlined /*, UserOutlined*/ } from "@ant-design/icons";
 
+import LoginPage from "../LoginPage/LoginPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 const { Text, Link, Title } = Typography;
 const { Search } = Input;
 
 class MainLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.onLogoClick = this.onLogoClick.bind(this);
+    this.onMenuItemClick = this.onMenuItemClick.bind(this);
+  }
+
   state = {
     collapsed: false,
+    content: "default",
   };
 
   onCollapse = (collapsed) => {
     console.log(collapsed);
     this.setState({ collapsed });
   };
+  onLogoClick = function (domEvent) {
+    this.setState({ content: "default" });
+  };
+  onMenuItemClick = ({ item, key, keyPath, domEvent }) => {
+    key == "register" &&
+      function _register() {
+        this.setState({ content: "" });
+        setTimeout(
+          function () {
+            this.setState({ content: "register" });
+          }.bind(this),
+          0,
+        );
+      }.call(this);
+
+    key == "login" &&
+      function _login() {
+        this.setState({ content: "login" });
+      }.call(this);
+  };
 
   render() {
-    const { collapsed } = this.state;
+    const { collapsed, content } = this.state;
     return (
       <Layout>
         <Header className="header">
-          <div className="logo" />
+          <div
+            className="logo"
+            onClick={this.onLogoClick}
+            style={{ cursor: "pointer" }}
+          />
           <Row>
             <Col span={16}>
               <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-                <Menu.Item key="1">?</Menu.Item>
-                <Menu.Item key="2">이용방법</Menu.Item>
-                <Menu.Item key="3">이벤트</Menu.Item>
+                <Menu.Item key="question">?</Menu.Item>
+                <Menu.Item key="usign">이용방법</Menu.Item>
+                <Menu.Item key="event">이벤트</Menu.Item>
               </Menu>
             </Col>
             <Col span={8}>
               <Row justify="end">
                 <Menu theme="dark" mode="horizontal">
-                  <Menu.Item key="4">회원가입</Menu.Item>
-                  <Menu.Item key="5">로그인</Menu.Item>
+                  <Menu.Item key="register" onClick={this.onMenuItemClick}>
+                    회원가입
+                  </Menu.Item>
+                  <Menu.Item key="login" onClick={this.onMenuItemClick}>
+                    로그인
+                  </Menu.Item>
                 </Menu>
               </Row>
             </Col>
           </Row>
         </Header>
-        <Layout style={{ height: "850px" }}>
+        <Layout style={{ height: "100vh" }}>
           <Sider
             collapsed={false}
             width={200}
@@ -86,30 +124,38 @@ class MainLayout extends Component {
               align="center"
               className="site-layout-background"
             >
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <Title level={2}>
-                <Text type="danger">N A N U R I</Text>
-              </Title>
-              <Input
-                style={{ width: 800 }}
-                placeholder=" 사업장 또는 전화번호를 입력하세요."
-                prefix={<SearchOutlined className="site-form-item-icon" />}
-                suffix={
-                  <Tooltip title="Extra information">
-                    <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
-                  </Tooltip>
-                }
-                size="large"
-                maxLength={50}
-              />
+              {content == "default" && (
+                <>
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <Title level={2}>
+                    <Text type="danger">N A N U R I</Text>
+                  </Title>
+                  <Input
+                    style={{ width: 800 }}
+                    placeholder=" 사업장 또는 전화번호를 입력하세요."
+                    prefix={<SearchOutlined className="site-form-item-icon" />}
+                    suffix={
+                      <Tooltip title="Extra information">
+                        <InfoCircleOutlined
+                          style={{ color: "rgba(0,0,0,.45)" }}
+                        />
+                      </Tooltip>
+                    }
+                    size="large"
+                    maxLength={50}
+                  />
+                </>
+              )}
+              {content == "login" && <LoginPage />}
+              {content == "register" && <RegisterPage />}
             </Content>
           </Layout>
         </Layout>

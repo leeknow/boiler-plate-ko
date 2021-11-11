@@ -213,6 +213,7 @@ function LoginPage(props) {
                   id="rememberMe"
                   onChange={handleRememberMe}
                   checked={rememberMe}
+                  style={{ float: "left" }}
                 >
                   Remember me
                 </Checkbox>
@@ -235,7 +236,9 @@ function LoginPage(props) {
                     Log in
                   </Button>
                 </div>
-                Or <a href="/register">register now!</a>
+                <div style={{ float: "left" }}>
+                  Or <a href="/register">register now!</a>
+                </div>
               </Form.Item>
             </form>
           </div>

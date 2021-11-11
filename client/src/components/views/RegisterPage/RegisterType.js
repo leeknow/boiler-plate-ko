@@ -48,21 +48,44 @@ function RegisterType(props) {
       }
     });
   };
+
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
+        // alignItems: "center",
+        height: "100%",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Text>가입유형을 선택하세요.</Text>
-        <Button style={{ width: "300px" }} block size="large">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <Text style={{ textAlign: "left" }}>가입유형을 선택하세요</Text>
+        <Button
+          style={{ width: "300px" }}
+          block
+          size="large"
+          onClick={(event) => props.onClick(event, "user")}
+        >
           개인
         </Button>
-        <Button style={{ width: "300px" }} block size="large">
+        <Button
+          style={{ width: "300px" }}
+          block
+          size="large"
+          onClick={(event) => props.onClick(event, "shop")}
+        >
           사업주
         </Button>
       </div>
