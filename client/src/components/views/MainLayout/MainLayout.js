@@ -16,6 +16,7 @@ import { InfoCircleOutlined /*, UserOutlined*/ } from "@ant-design/icons";
 
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
+import ProductPage from "../ProductPage/ProductPage";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -47,7 +48,7 @@ class MainLayout extends Component {
         this.setState({ content: "" });
         setTimeout(
           function () {
-            this.setState({ content: "register" });
+            this.setState({ content: "product" });
           }.bind(this),
           0,
         );
@@ -156,6 +157,7 @@ class MainLayout extends Component {
               )}
               {content == "login" && <LoginPage />}
               {content == "register" && <RegisterPage />}
+              {content == "product" && <ProductPage />}
             </Content>
           </Layout>
         </Layout>

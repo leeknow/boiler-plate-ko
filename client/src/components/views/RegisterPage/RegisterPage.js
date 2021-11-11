@@ -115,268 +115,314 @@ function RegisterPage(props) {
           handleReset,
         } = props;
         return (
-          <div className="app">
-            {step == "type" && <RegisterType onClick={onTypeHandler} />}
-            {step == "regist" && (
-              <Form
-                style={{ width: "500px" }}
-                {...formItemLayout}
-                onSubmit={handleSubmit}
-              >
-                <Form.Item
-                  required
-                  label="Email"
-                  // hasFeedback
-                  validateStatus={
-                    errors.email && touched.email ? "error" : "success"
-                  }
+          <div
+            className="app"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              // alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {step == "type" && <RegisterType onClick={onTypeHandler} />}
+              {step == "regist" && (
+                <Form
+                  style={{ width: "500px" }}
+                  {...formItemLayout}
+                  onSubmit={handleSubmit}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
+                  <Form.Item
+                    required
+                    label="Email"
+                    // hasFeedback
+                    validateStatus={
+                      errors.email && touched.email ? "error" : "success"
+                    }
                   >
-                    <div style={{ width: "100%" }}>
-                      <Input
-                        id="email"
-                        placeholder="Enter your Email"
-                        type="email"
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={
-                          errors.email && touched.email
-                            ? "text-input error"
-                            : "text-input"
-                        }
-                      />
-                      {errors.email && touched.email && (
-                        <div className="input-feedback">{errors.email}</div>
-                      )}
-                    </div>
-                    <Button>인증</Button>
-                  </div>
-                </Form.Item>
-
-                <Form.Item
-                  required
-                  label="Password"
-                  validateStatus={
-                    errors.password && touched.password ? "error" : "success"
-                  }
-                >
-                  <Input
-                    id="password"
-                    placeholder="Enter your password"
-                    type="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.password && touched.password
-                        ? "text-input error"
-                        : "text-input"
-                    }
-                  />
-                  {errors.password && touched.password && (
-                    <div className="input-feedback">{errors.password}</div>
-                  )}
-                </Form.Item>
-
-                <Form.Item
-                  required
-                  label="Confirm"
-                  validateStatus={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? "error"
-                      : "success"
-                  }
-                >
-                  <Input
-                    id="confirmPassword"
-                    placeholder="Enter your confirmPassword"
-                    type="password"
-                    value={values.confirmPassword}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? "text-input error"
-                        : "text-input"
-                    }
-                  />
-                  {errors.confirmPassword && touched.confirmPassword && (
-                    <div className="input-feedback">
-                      {errors.confirmPassword}
-                    </div>
-                  )}
-                </Form.Item>
-
-                {type == "shop" && (
-                  <>
-                    <Form.Item
-                      required
-                      label="상호"
-                      validateStatus={
-                        errors.shopName && touched.shopName
-                          ? "error"
-                          : "success"
-                      }
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
                     >
-                      <Input
-                        id="shopName"
-                        placeholder="상호를 입력하세요"
-                        type="text"
-                        value={values.shopName}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={
-                          errors.shopName && touched.shopName
-                            ? "text-input error"
-                            : "text-input"
-                        }
-                      />
-                      {errors.shopName && touched.shopName && (
-                        <div className="input-feedback">{errors.shopName}</div>
-                      )}
-                    </Form.Item>
-
-                    <Form.Item
-                      required
-                      label="사업자번호"
-                      validateStatus={
-                        errors.businessNumber && touched.businessNumber
-                          ? "error"
-                          : "success"
-                      }
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <div style={{ width: "100%" }}>
-                          <Input
-                            id="businessNumber"
-                            placeholder="사업자번호를 입력하세요"
-                            type="text"
-                            value={values.businessNumber}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            className={
-                              errors.businessNumber && touched.businessNumber
-                                ? "text-input error"
-                                : "text-input"
-                            }
-                          />
-                          {errors.businessNumber && touched.businessNumber && (
-                            <div className="input-feedback">
-                              {errors.businessNumber}
-                            </div>
-                          )}
-                        </div>
-                        <Button>인증</Button>
+                      <div style={{ width: "100%" }}>
+                        <Input
+                          id="email"
+                          placeholder="Enter your Email"
+                          type="email"
+                          value={values.email}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.email && touched.email
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                        {errors.email && touched.email && (
+                          <div
+                            className="input-feedback"
+                            style={{ textAlign: "left" }}
+                          >
+                            {errors.email}
+                          </div>
+                        )}
                       </div>
-                    </Form.Item>
+                      <Button>인증</Button>
+                    </div>
+                  </Form.Item>
 
-                    <Form.Item
-                      required
-                      label="대표자명"
-                      validateStatus={
-                        errors.ceoName && touched.ceoName ? "error" : "success"
+                  <Form.Item
+                    required
+                    label="Password"
+                    validateStatus={
+                      errors.password && touched.password ? "error" : "success"
+                    }
+                  >
+                    <Input
+                      id="password"
+                      placeholder="Enter your password"
+                      type="password"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                        errors.password && touched.password
+                          ? "text-input error"
+                          : "text-input"
                       }
-                    >
-                      <Input
-                        id="ceoName"
-                        placeholder="대표자명을 입력하세요"
-                        type="text"
-                        value={values.ceoName}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={
-                          errors.ceoName && touched.ceoName
-                            ? "text-input error"
-                            : "text-input"
-                        }
-                      />
-                      {errors.ceoName && touched.ceoName && (
-                        <div className="input-feedback">{errors.ceoName}</div>
-                      )}
-                    </Form.Item>
-
-                    <Form.Item
-                      required
-                      label="개업일자"
-                      validateStatus={
-                        errors.openingDate && touched.openingDate
-                          ? "error"
-                          : "success"
-                      }
-                    >
-                      <Input
-                        id="openingDate"
-                        placeholder="개업일자 입력하세요"
-                        type="date"
-                        value={values.openingDate}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={
-                          errors.openingDate && touched.openingDate
-                            ? "text-input error"
-                            : "text-input"
-                        }
-                      />
-                      {errors.openingDate && touched.openingDate && (
-                        <div className="input-feedback">
-                          {errors.openingDate}
-                        </div>
-                      )}
-                    </Form.Item>
-
-                    <Form.Item label="주소">
-                      <Input
-                        placeholder="주소를 입력하세요"
-                        type="text"
-                        value={values.address}
-                        className="text-input"
-                      />
-                    </Form.Item>
-
-                    <Form.Item label="연락처">
-                      <Input
-                        placeholder="연락처를 입력하세요"
-                        type="text"
-                        value={values.phoneNumber}
-                        className="text-input"
-                      />
-                    </Form.Item>
-
-                    <Form.Item label="정산계좌">
-                      <Input
-                        placeholder="정산계좌를 입력하세요"
-                        type="text"
-                        value={values.phoneNumber}
-                        className="text-input"
-                      />
-                    </Form.Item>
-
-                    <Form.Item {...tailFormItemLayout}>
-                      <Button
-                        onClick={handleSubmit}
-                        type="primary"
-                        disabled={isSubmitting}
+                    />
+                    {errors.password && touched.password && (
+                      <div
+                        className="input-feedback"
+                        style={{ textAlign: "left" }}
                       >
-                        Submit
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form>
-            )}
+                        {errors.password}
+                      </div>
+                    )}
+                  </Form.Item>
+
+                  <Form.Item
+                    required
+                    label="Confirm"
+                    validateStatus={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? "error"
+                        : "success"
+                    }
+                  >
+                    <Input
+                      id="confirmPassword"
+                      placeholder="Enter your confirmPassword"
+                      type="password"
+                      value={values.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                        errors.confirmPassword && touched.confirmPassword
+                          ? "text-input error"
+                          : "text-input"
+                      }
+                    />
+                    {errors.confirmPassword && touched.confirmPassword && (
+                      <div
+                        className="input-feedback"
+                        style={{ textAlign: "left" }}
+                      >
+                        {errors.confirmPassword}
+                      </div>
+                    )}
+                  </Form.Item>
+
+                  {type == "shop" && (
+                    <>
+                      <Form.Item
+                        required
+                        label="상호"
+                        validateStatus={
+                          errors.shopName && touched.shopName
+                            ? "error"
+                            : "success"
+                        }
+                      >
+                        <Input
+                          id="shopName"
+                          placeholder="상호를 입력하세요"
+                          type="text"
+                          value={values.shopName}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.shopName && touched.shopName
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                        {errors.shopName && touched.shopName && (
+                          <div
+                            className="input-feedback"
+                            style={{ textAlign: "left" }}
+                          >
+                            {errors.shopName}
+                          </div>
+                        )}
+                      </Form.Item>
+
+                      <Form.Item
+                        required
+                        label="사업자번호"
+                        validateStatus={
+                          errors.businessNumber && touched.businessNumber
+                            ? "error"
+                            : "success"
+                        }
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div style={{ width: "100%" }}>
+                            <Input
+                              id="businessNumber"
+                              placeholder="사업자번호를 입력하세요"
+                              type="text"
+                              value={values.businessNumber}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              className={
+                                errors.businessNumber && touched.businessNumber
+                                  ? "text-input error"
+                                  : "text-input"
+                              }
+                            />
+                            {errors.businessNumber && touched.businessNumber && (
+                              <div
+                                className="input-feedback"
+                                style={{ textAlign: "left" }}
+                              >
+                                {errors.businessNumber}
+                              </div>
+                            )}
+                          </div>
+                          <Button>인증</Button>
+                        </div>
+                      </Form.Item>
+
+                      <Form.Item
+                        required
+                        label="대표자명"
+                        validateStatus={
+                          errors.ceoName && touched.ceoName
+                            ? "error"
+                            : "success"
+                        }
+                      >
+                        <Input
+                          id="ceoName"
+                          placeholder="대표자명을 입력하세요"
+                          type="text"
+                          value={values.ceoName}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.ceoName && touched.ceoName
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                        {errors.ceoName && touched.ceoName && (
+                          <div
+                            className="input-feedback"
+                            style={{ textAlign: "left" }}
+                          >
+                            {errors.ceoName}
+                          </div>
+                        )}
+                      </Form.Item>
+
+                      <Form.Item
+                        required
+                        label="개업일자"
+                        validateStatus={
+                          errors.openingDate && touched.openingDate
+                            ? "error"
+                            : "success"
+                        }
+                      >
+                        <Input
+                          id="openingDate"
+                          placeholder="개업일자 입력하세요"
+                          type="date"
+                          value={values.openingDate}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.openingDate && touched.openingDate
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                        {errors.openingDate && touched.openingDate && (
+                          <div
+                            className="input-feedback"
+                            style={{ textAlign: "left" }}
+                          >
+                            {errors.openingDate}
+                          </div>
+                        )}
+                      </Form.Item>
+
+                      <Form.Item label="주소">
+                        <Input
+                          placeholder="주소를 입력하세요"
+                          type="text"
+                          value={values.address}
+                          className="text-input"
+                        />
+                      </Form.Item>
+
+                      <Form.Item label="연락처">
+                        <Input
+                          placeholder="연락처를 입력하세요"
+                          type="text"
+                          value={values.phoneNumber}
+                          className="text-input"
+                        />
+                      </Form.Item>
+
+                      <Form.Item label="정산계좌">
+                        <Input
+                          placeholder="정산계좌를 입력하세요"
+                          type="text"
+                          value={values.phoneNumber}
+                          className="text-input"
+                        />
+                      </Form.Item>
+                    </>
+                  )}
+                  <Form.Item {...tailFormItemLayout}>
+                    <Button
+                      onClick={handleSubmit}
+                      type="primary"
+                      disabled={isSubmitting}
+                      style={{ float: "left" }}
+                    >
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
+              )}
+            </div>
           </div>
         );
       }}
