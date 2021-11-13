@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sections/ProductPage.css";
 
 import {
+  message,
   Form,
   Input,
   InputNumber,
@@ -12,6 +13,7 @@ import {
   Button,
   Modal,
   Typography,
+  Space,
 } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
@@ -34,12 +36,20 @@ const formItemLayout = {
 };
 const tailFormItemLayout = {
   wrapperCol: {
+    // xs: {
+    //   span: 24,
+    //   offset: 0,
+    // },
+    // sm: {
+    //   span: 16,
+    //   offset: 8,
+    // },
     xs: {
-      span: 24,
+      span: 12,
       offset: 0,
     },
     sm: {
-      span: 16,
+      span: 6,
       offset: 8,
     },
   },
@@ -54,15 +64,13 @@ const toLocaleDate = function (d) {
 function ProductPage(props) {
   const [products, setProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState(true);
-  const [values, setValues] = useState(null);
-  //   const [submit, setSubmit] = useState(null);
+  const [product, setProduct] = useState(null);
 
   return (
     <>
       <Row gutter={[24, 24]}>
         {products.map((p) => (
-          <Col key={new Date().getTime()} className="gutter-row" span={4}>
+          <Col key={p.id} className="gutter-row" span={4}>
             <div className="site-card-border-less-wrapper">
               <Badge size="default" count={5}>
                 <Card
@@ -70,8 +78,7 @@ function ProductPage(props) {
                   bordered={false}
                   style={{ width: "200px", cursor: "pointer" }}
                   onClick={() => {
-                    p.id = "" + new Date().getTime();
-                    setValues(p);
+                    setProduct(p);
                     setShowModal(true);
                   }}
                 >
@@ -95,8 +102,7 @@ function ProductPage(props) {
               height: "100%",
             }}
             onClick={() => {
-              setError(true);
-              setValues(null);
+              setProduct(null);
               setShowModal(true);
             }}
           >
@@ -114,68 +120,22 @@ function ProductPage(props) {
         closable={false}
         destroyOnClose="true"
         title="상품정보"
-        footer={[
-          !!(values || {}).id ? (
-            <Button
-              key="del"
-              onClick={() => {
-                // TODO: service (promise)
-                setProducts(
-                  products.reduce((acc, p) => {
-                    p.id != values.id && acc.push(p);
-                    return acc;
-                  }, []),
-                );
-                setShowModal(false);
-              }}
-            >
-              삭제
-            </Button>
-          ) : null,
-          <Button
-            key="save"
-            type="primary"
-            // loading={loading}
-            onClick={() => {
-              if (!error && !!values.name && !!values.detail) {
-                console.log(">>>>>> OK values", values);
-                // TODO: 같은 조건의 상품이 있는지 중복체크를 한다(동일기간, 동일금액)
-                // TODO: service (promise)
-                !values.id
-                  ? // 등록
-                    setProducts([...products, values])
-                  : // 수정
-                    setProducts(
-                      products.reduce((acc, p) => {
-                        acc.push(p.id == values.id ? values : p);
-                        return acc;
-                      }, []),
-                    );
-                setShowModal(false);
-              }
-            }}
-          >
-            {!!(values || {}).id ? "수정" : "등록"}
-          </Button>,
-          <Button key="close" onClick={() => setShowModal(false)}>
-            닫기
-          </Button>,
-        ].filter((e) => !!e)}
+        footer={null}
       >
         <Formik
           initialValues={
-            values || {
+            product || {
               // 상품명
               name: "",
               // 상세
               detail: "",
               // 기간
-              term: 1,
+              term: 6,
               // 가격(금액)
-              price: 10,
-              confirmPrice: 10,
+              price: 30,
+              confirmPrice: 30,
               // 시작일자
-              startDate: toLocaleDate(new Date()),
+              //   startDate: toLocaleDate(new Date()),
             }
           }
           validationSchema={Yup.object().shape({
@@ -199,13 +159,53 @@ function ProductPage(props) {
             confirmPrice: Yup.number()
               .required("가격확인이 필요합니다")
               .oneOf([Yup.ref("price"), null], "동일한 가격을 입력하세요"),
-            startDate: Yup.date()
-              .required("필수입니다")
-              .test("min", "현재일 이후만 입력가능합니다", (value) => {
-                return toLocaleDate(value) >= toLocaleDate(new Date());
-              }),
+            // startDate: Yup.date()
+            //   .required("필수입니다")
+            //   .test("min", "현재일 이후만 입력가능합니다", (value) => {
+            //     return (
+            //       (!!product.id &&
+            //         toLocaleDate(value) < toLocaleDate(new Date())) ||
+            //       toLocaleDate(value) >= toLocaleDate(new Date())
+            //     );
+            //   }),
           })}
-          //   onSubmit={(values, { setSubmitting }) => {}}
+          onSubmit={(values, { setSubmitting }) => {
+            console.log(">>>>>> OK values", values);
+            // 동일상품체크
+            if (
+              products.filter((p) => p.id != values.id && p.name == values.name)
+                .length > 0
+            ) {
+              message.warning("이미 등록된 상품입니다");
+              setSubmitting(false);
+              return;
+            }
+            // 변경여부체크
+            if (
+              !!values.id &&
+              JSON.stringify(product) == JSON.stringify(values)
+            ) {
+              message.warning("변경된 내용이 없습니다");
+              setSubmitting(false);
+              return;
+            }
+            // TODO: confirm message (등록과 동시에 판매되는 상품임을 알린다)
+            // TODO: service (promise)
+            !values.id
+              ? // 등록
+                (() => {
+                  values.id = values.id || new Date().getTime() + "";
+                  setProducts([...products, values]);
+                })()
+              : // 수정
+                setProducts(
+                  products.reduce((acc, p) => {
+                    acc.push(p.id == values.id ? values : p);
+                    return acc;
+                  }, []),
+                );
+            setShowModal(false);
+          }}
         >
           {(props) => {
             const {
@@ -215,20 +215,11 @@ function ProductPage(props) {
               dirty,
               isSubmitting,
               handleChange,
-              //   handleBlur,
+              handleBlur,
               handleSubmit,
               handleReset,
             } = props;
-            // 재정의
-            const handleBlur = (value) => {
-              console.log(">>>> errors", errors, touched);
-              setError(Object.keys(errors).length > 0);
-              setValues(values);
-              return props.handleBlur(value);
-            };
-            // Modal
-            // setSubmit(() => handleSubmit);
-            // Render
+
             return (
               <div
                 className="app"
@@ -315,7 +306,7 @@ function ProductPage(props) {
 
                     <Form.Item
                       required
-                      label="기간"
+                      label="이용기간"
                       validateStatus={
                         errors.term && touched.term ? "error" : "success"
                       }
@@ -353,7 +344,7 @@ function ProductPage(props) {
                     >
                       <Input
                         id="price"
-                        placeholder="가격을 입력하세요"
+                        placeholder="판매가격을 입력하세요"
                         prefix="₩"
                         suffix="만원"
                         type="number"
@@ -410,7 +401,7 @@ function ProductPage(props) {
                       )}
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                       required
                       label="판매시작일"
                       validateStatus={
@@ -423,6 +414,10 @@ function ProductPage(props) {
                         id="startDate"
                         placeholder="판매시작일을 입력하세요"
                         type="date"
+                        disabled={
+                          !!values.id &&
+                          toLocaleDate(new Date()) > values.startDate
+                        }
                         value={values.startDate}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -440,7 +435,49 @@ function ProductPage(props) {
                           {errors.startDate}
                         </div>
                       )}
-                    </Form.Item>
+                      <br />
+                    </Form.Item> */}
+
+                    <Space
+                      align="end"
+                      style={{ float: "right", margin: "10px 40px 0px 40px" }}
+                    >
+                      {[
+                        !!(values || {}).id ? (
+                          <Button
+                            key="del"
+                            onClick={() => {
+                              // TODO: service (promise)
+                              setProducts(
+                                products.reduce((acc, p) => {
+                                  p.id != values.id && acc.push(p);
+                                  return acc;
+                                }, []),
+                              );
+                              setShowModal(false);
+                            }}
+                          >
+                            삭제
+                          </Button>
+                        ) : null,
+                        <Button
+                          key="save"
+                          onClick={handleSubmit}
+                          style={{ float: "right" }}
+                          disabled={isSubmitting}
+                          type="primary"
+                        >
+                          {!!(values || {}).id ? "수정" : "등록"}
+                        </Button>,
+                        <Button
+                          key="close"
+                          style={{ float: "right" }}
+                          onClick={() => setShowModal(false)}
+                        >
+                          닫기
+                        </Button>,
+                      ].filter((e) => !!e)}
+                    </Space>
                   </Form>
                 </div>
               </div>
