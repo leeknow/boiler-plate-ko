@@ -7,7 +7,8 @@ import RegisterType from "./RegisterType";
 import { registerUser } from "../../../_actions/user_action";
 import { useDispatch } from "react-redux";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Typography } from "antd";
+const { Text } = Typography;
 
 const formItemLayout = {
   labelCol: {
@@ -120,7 +121,7 @@ function RegisterPage(props) {
             style={{
               display: "flex",
               justifyContent: "center",
-              // alignItems: "center",
+              alignItems: "center",
               height: "100%",
             }}
           >

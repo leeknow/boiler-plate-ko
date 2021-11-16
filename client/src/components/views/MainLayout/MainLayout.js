@@ -48,10 +48,15 @@ class MainLayout extends Component {
         this.setState({ content: "" });
         setTimeout(
           function () {
-            this.setState({ content: "product" });
+            this.setState({ content: "register" });
           }.bind(this),
           0,
         );
+      }.call(this);
+
+    key == "product" &&
+      function _product() {
+        this.setState({ content: "product" });
       }.call(this);
 
     key == "login" &&
@@ -106,7 +111,9 @@ class MainLayout extends Component {
             >
               <SubMenu key="sub1" icon={<UserOutlined />} title="마이누리">
                 <Menu.Item key="1">장부 및 정산</Menu.Item>
-                <Menu.Item key="2">상품</Menu.Item>
+                <Menu.Item key="product" onClick={this.onMenuItemClick}>
+                  상품
+                </Menu.Item>
                 <Menu.Item key="3">홍보</Menu.Item>
                 <Menu.Item key="4">게시판</Menu.Item>
               </SubMenu>

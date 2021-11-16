@@ -54,23 +54,11 @@ function RegisterType(props) {
       style={{
         display: "flex",
         justifyContent: "center",
-        // alignItems: "center",
+        alignItems: "center",
         height: "100%",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <Text style={{ textAlign: "left" }}>가입유형을 선택하세요</Text>
         <Button
           style={{ width: "300px" }}
