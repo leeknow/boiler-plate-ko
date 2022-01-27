@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import moment from "moment";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -8,6 +9,7 @@ import { registerUser } from "../../../_actions/user_action";
 import { useDispatch } from "react-redux";
 
 import { Form, Input, Button, Typography } from "antd";
+import Axios from "axios";
 const { Text } = Typography;
 
 const formItemLayout = {
@@ -176,7 +178,21 @@ function RegisterPage(props) {
                           </div>
                         )}
                       </div>
-                      <Button>인증</Button>
+                      <Button
+                        onClick={() => {
+                          console.log(">>>>> start");
+                          axios
+                            .post(
+                              `${process.env.REACT_APP_HOST}/api/users/register/auth`,
+                              { a: 11111 },
+                            )
+                            .then((response) => {
+                              console.log(">>>> end", response.data);
+                            });
+                        }}
+                      >
+                        인증
+                      </Button>
                     </div>
                   </Form.Item>
 

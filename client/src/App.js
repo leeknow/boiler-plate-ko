@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import LandingPage from "./components/views/LandingPage/LandingPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import LandingPage from "./components/views/LandingPage/LandingPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import MainLayout from "./components/views/MainLayout/MainLayout";

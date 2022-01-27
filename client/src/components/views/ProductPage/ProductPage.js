@@ -5,7 +5,6 @@ import {
   message,
   Form,
   Input,
-  InputNumber,
   Row,
   Col,
   Card,
@@ -34,32 +33,32 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
-const tailFormItemLayout = {
-  wrapperCol: {
-    // xs: {
-    //   span: 24,
-    //   offset: 0,
-    // },
-    // sm: {
-    //   span: 16,
-    //   offset: 8,
-    // },
-    xs: {
-      span: 12,
-      offset: 0,
-    },
-    sm: {
-      span: 6,
-      offset: 8,
-    },
-  },
-};
+// const tailFormItemLayout = {
+//   wrapperCol: {
+//     // xs: {
+//     //   span: 24,
+//     //   offset: 0,
+//     // },
+//     // sm: {
+//     //   span: 16,
+//     //   offset: 8,
+//     // },
+//     xs: {
+//       span: 12,
+//       offset: 0,
+//     },
+//     sm: {
+//       span: 6,
+//       offset: 8,
+//     },
+//   },
+// };
 
 // YYYY-MM-DD
-const toLocaleDate = function (d) {
-  var m = d.getMonth() + 1;
-  return [d.getFullYear(), m <= 9 ? "0" + m : m, d.getDate()].join("-");
-};
+// const toLocaleDate = function (d) {
+//   var m = d.getMonth() + 1;
+//   return [d.getFullYear(), m <= 9 ? "0" + m : m, d.getDate()].join("-");
+// };
 
 function ProductPage(props) {
   const [products, setProducts] = useState([]);
@@ -447,6 +446,7 @@ function ProductPage(props) {
                           <Button
                             key="del"
                             onClick={() => {
+                              // 삭제: use_flag - N
                               // TODO: service (promise)
                               setProducts(
                                 products.reduce((acc, p) => {

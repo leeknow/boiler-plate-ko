@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Shop, ShopSchema } = require("./Shop");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -8,10 +9,6 @@ const someOtherPlaintextPassword = "not_bacon";
 var jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
-  name: {
-    type: String,
-    maxlength: 50,
-  },
   email: {
     type: String,
     trim: true,
@@ -19,17 +16,13 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    minlength: 5,
+    minlength: 8,
   },
-  lastname: {
+  userTypeCode: {
     type: String,
-    maxlength: 50,
+    maxlength: 10,
   },
-  role: {
-    type: Number,
-    default: 0,
-  },
-  image: String,
+  shops: [ShopSchema],
   token: {
     type: String,
   },

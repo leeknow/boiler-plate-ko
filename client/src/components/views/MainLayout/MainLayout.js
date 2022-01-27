@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import "./Sections/MainLayout.css";
 
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import { Row, Col } from "antd";
-import { Typography, Space } from "antd";
+import { Typography } from "antd";
 import { Input, Tooltip } from "antd";
 
 import {
   UserOutlined,
   LaptopOutlined,
-  NotificationOutlined,
+  // NotificationOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { InfoCircleOutlined /*, UserOutlined*/ } from "@ant-design/icons";
@@ -17,11 +17,11 @@ import { InfoCircleOutlined /*, UserOutlined*/ } from "@ant-design/icons";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import ProductPage from "../ProductPage/ProductPage";
+import SearchPage from "../SearchPage/SearchPage";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
-const { Text, Link, Title } = Typography;
-const { Search } = Input;
+const { Text, Title } = Typography;
 
 class MainLayout extends Component {
   constructor(props) {
@@ -33,6 +33,7 @@ class MainLayout extends Component {
   state = {
     collapsed: false,
     content: "default",
+    login: false,
   };
 
   onCollapse = (collapsed) => {
@@ -43,7 +44,7 @@ class MainLayout extends Component {
     this.setState({ content: "default" });
   };
   onMenuItemClick = ({ item, key, keyPath, domEvent }) => {
-    key == "register" &&
+    key === "register" &&
       function _register() {
         this.setState({ content: "" });
         setTimeout(
@@ -54,19 +55,42 @@ class MainLayout extends Component {
         );
       }.call(this);
 
-    key == "product" &&
+    key === "product" &&
       function _product() {
-        this.setState({ content: "product" });
+        this.setState({ content: "" });
+        setTimeout(
+          function () {
+            this.setState({ content: "product" });
+          }.bind(this),
+          0,
+        );
       }.call(this);
 
-    key == "login" &&
+    key === "login" &&
       function _login() {
-        this.setState({ content: "login" });
+        this.setState({ login: false });
+        setTimeout(
+          function () {
+            this.setState({ login: true });
+          }.bind(this),
+          0,
+        );
+      }.call(this);
+
+    key === "search" &&
+      function _search() {
+        this.setState({ content: "" });
+        setTimeout(
+          function () {
+            this.setState({ content: "search" });
+          }.bind(this),
+          0,
+        );
       }.call(this);
   };
 
   render() {
-    const { collapsed, content } = this.state;
+    const { collapsed, content, login } = this.state;
     return (
       <Layout>
         <Header className="header">
@@ -114,7 +138,9 @@ class MainLayout extends Component {
                 <Menu.Item key="product" onClick={this.onMenuItemClick}>
                   상품
                 </Menu.Item>
-                <Menu.Item key="3">홍보</Menu.Item>
+                <Menu.Item key="search" onClick={this.onMenuItemClick}>
+                  검색
+                </Menu.Item>
                 <Menu.Item key="4">게시판</Menu.Item>
               </SubMenu>
               <SubMenu key="sub2" icon={<LaptopOutlined />} title="기타">
@@ -132,7 +158,7 @@ class MainLayout extends Component {
               align="center"
               className="site-layout-background"
             >
-              {content == "default" && (
+              {content === "default" && (
                 <>
                   <br />
                   <br />
@@ -162,9 +188,10 @@ class MainLayout extends Component {
                   />
                 </>
               )}
-              {content == "login" && <LoginPage />}
-              {content == "register" && <RegisterPage />}
-              {content == "product" && <ProductPage />}
+              {login && <LoginPage />}
+              {content === "register" && <RegisterPage />}
+              {content === "product" && <ProductPage />}
+              {content === "search" && <SearchPage />}
             </Content>
           </Layout>
         </Layout>
